@@ -20,6 +20,5 @@ WORKDIR /app
 COPY --from=dotnet-build /publish ./
 COPY --from=angular-build /angular/dist/coal-erp/browser ./wwwroot/browser
 EXPOSE 5000
-ENV ASPNETCORE_URLS=http://+:5000
 ENV ASPNETCORE_ENVIRONMENT=Production
-ENTRYPOINT ["dotnet", "CoalErp.Api.dll"]
+CMD dotnet CoalErp.Api.dll --urls "http://+:${PORT:-5000}"

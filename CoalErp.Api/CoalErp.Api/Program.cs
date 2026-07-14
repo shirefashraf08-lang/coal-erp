@@ -139,6 +139,7 @@ app.UseStaticFiles();    // serves wwwroot/*
 app.UseAuthentication();
 app.UseAuthorization();
 app.MapControllers();
+app.MapGet("/api/health", () => Results.Ok(new { status = "healthy", time = DateTime.UtcNow }));
 
 // SPA fallback: any non-API route → index.html
 app.MapFallbackToFile("index.html");
