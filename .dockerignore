@@ -1,0 +1,11 @@
+coal-erp/node_modules
+coal-erp/.angular
+coal-erp/dist
+CoalErp.Api/CoalErp.Api/bin
+CoalErp.Api/CoalErp.Api/obj
+CoalErp.Api/CoalErp.Api/wwwroot
+**/*.db
+**/*.db-shm
+**/*.db-wal
+*.log
+*.err

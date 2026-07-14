@@ -5,6 +5,7 @@ using CoalErp.Api.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
@@ -15,8 +16,22 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions
 });
 
 // ── Database ──────────────────────────────────────────────────────────────
+// PostgreSQL in production (Render/Supabase), SQLite in development
+var dbUrl = Environment.GetEnvironmentVariable("DATABASE_URL")
+         ?? builder.Configuration.GetConnectionString("Default");
+
 builder.Services.AddDbContext<AppDbContext>(opt =>
-    opt.UseSqlite(builder.Configuration.GetConnectionString("Default")));
+{
+    if (!string.IsNullOrEmpty(dbUrl) &&
+        (dbUrl.StartsWith("postgresql://") || dbUrl.StartsWith("postgres://")))
+    {
+        opt.UseNpgsql(dbUrl);
+    }
+    else
+    {
+        opt.UseSqlite(dbUrl ?? "Data Source=coalerp.db");
+    }
+});
 
 // ── Identity ──────────────────────────────────────────────────────────────
 builder.Services.AddIdentity<AppUser, IdentityRole>(opt =>

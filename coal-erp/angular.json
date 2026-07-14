@@ -21,7 +21,7 @@
           "builder": "@angular/build:application",
           "options": {
             "browser": "src/main.ts",
-            "outputPath": "D:/coal/CoalErp.Api/CoalErp.Api/wwwroot",
+            "outputPath": "dist/coal-erp",
             "tsConfig": "tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
